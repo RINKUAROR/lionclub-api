@@ -1,8 +1,10 @@
-# Use official PHP image with Apache
 FROM php:8.2-apache
 
-# Copy all project files into Apache root
+# mysqli install karo
+RUN docker-php-ext-install mysqli
+
+# Copy local files into container
 COPY . /var/www/html/
 
-# Enable Apache mod_rewrite (if needed)
+# Enable Apache rewrite module (optional)
 RUN a2enmod rewrite
