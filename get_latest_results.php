@@ -1,24 +1,24 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+include('db.php');
+header('Content-Type: application/json');
 
+$response = [];
 
-include('db.php');  // Same directory ke liye
-
-
-
-$sql = "SELECT game_name, result FROM results ORDER BY id DESC LIMIT 1";  // ✅ correct table name
+$sql = "SELECT game_name, result FROM results ORDER BY id DESC LIMIT 1";
 $result = mysqli_query($conn, $sql);
 
-$response = array();
-
-if (mysqli_num_rows($result) > 0) {
+if ($result && mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
-    $response['game_name'] = $row['game_name'];
-    $response['result'] = $row['result'];
-    $response['status'] = 'success';
+    $response = [
+        "status" => true,
+        "game_name" => $row['game_name'],
+        "result" => $row['result']
+    ];
 } else {
-    $response['status'] = 'no_result';
+    $response = [
+        "status" => false,
+        "message" => "No results found"
+    ];
 }
 
 echo json_encode($response);
