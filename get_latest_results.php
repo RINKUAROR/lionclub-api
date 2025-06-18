@@ -3,7 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 
-include 'db.php';  // ✅ goes up one folder
+include('db.php');  // Same directory ke liye
+
 
 
 $sql = "SELECT game_name, result FROM results ORDER BY id DESC LIMIT 1";  // ✅ correct table name
